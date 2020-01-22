@@ -1,0 +1,29 @@
+{
+  "name": "pokerbot",
+  "version": "1.0.0",
+  "description": "Best hand",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylermaran/pokerbot.git"
+  },
+  "keywords": [
+    "poker",
+    "lowkey",
+    "themanmaran"
+  ],
+  "author": "Tyler Maran (tyler.maran@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylermaran/pokerbot/issues"
+  },
+  "homepage": "https://github.com/tylermaran/pokerbot#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
