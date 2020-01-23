@@ -1,17 +1,35 @@
 .landing {
-    min-height: 100vh;
-    height: 100%;
-    /* width: 100%; */
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0 10% 0 10%;
+	min-height: 100vh;
+	height: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 0 10% 0 10%;
 }
 
 .header {
-    padding: 40px 0 0 0;
- }
+	padding: 80px 0 0 0;
+}
+
+.overview {
+	margin: 0 0 20px 0;
+	text-align: center;
+	color: white;
+	font-size: 20px;
+}
 
 .result {
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
+	width: 50%;
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+}
+
+.button {
+	width: 50%;
+}
+
+button {
+	height: 50px;
+	width: 100px;
+	margin: 0 70px 0 0;
 }

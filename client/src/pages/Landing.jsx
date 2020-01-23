@@ -17,10 +17,8 @@ class Landing extends Component {
 					// 10 J Q K A all in the same suit
 					name: 'Royal Flush',
 					function: function(hand) {
-						// console.log('Checking for Royal Flush');
-						if (hand.flush) {
+						if (hand.royal_flush) {
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -29,10 +27,9 @@ class Landing extends Component {
 					// Five cards in a row, all in the same suit
 					name: 'Straight Flush',
 					function: function(hand) {
-						// console.log('Checking for Straight Flush');
-						if (hand.flush) {
+						if (hand.straight_flush) {
+							return 'Straight Flush';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -41,11 +38,9 @@ class Landing extends Component {
 					// The same card in each of the four suits
 					name: 'Four of a Kind',
 					function: function(hand) {
-						// console.log('Checking for Four of a Kind');
 						if (hand.four > 0) {
 							return 'Four of a Kind';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -54,11 +49,9 @@ class Landing extends Component {
 					// A pair plus three of a kind
 					name: 'Full House',
 					function: function(hand) {
-						// console.log('Checking for Full House');
 						if (hand.three > 0 && hand.two > 0) {
 							return 'Full House';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -67,11 +60,9 @@ class Landing extends Component {
 					// Five cards in one suit but not in numerical order
 					name: 'Flush',
 					function: function(hand) {
-						// console.log('Checking for Flush');
 						if (hand.flush) {
 							return 'Flush';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -80,11 +71,9 @@ class Landing extends Component {
 					// Five cards in numberical order, but not in the same suit
 					name: 'Straight',
 					function: function(hand) {
-						// console.log('Checking for Straight');
 						if (hand.straight) {
 							return 'Straight';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -93,11 +82,9 @@ class Landing extends Component {
 					// Three of one card and two non-paired cards
 					name: 'Three of a Kind',
 					function: function(hand) {
-						// console.log('Checking for Three of a Kind');
 						if (hand.three > 0) {
 							return 'Three of a Kind';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -106,11 +93,9 @@ class Landing extends Component {
 					// Two pairs
 					name: 'Two Pair',
 					function: function(hand) {
-						// console.log('Checking for Two Pair');
 						if (hand.two > 1) {
 							return 'Two Pair';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -119,11 +104,9 @@ class Landing extends Component {
 					// One Pair
 					name: 'One Pair',
 					function: function(hand) {
-						// console.log('Checking for One Pair');
 						if (hand.two > 0) {
 							return 'One Pair';
 						} else {
-							// console.log('None');
 							return false;
 						}
 					},
@@ -132,7 +115,6 @@ class Landing extends Component {
 					// No matching cards
 					name: 'High Card',
 					function: function(hand) {
-						// console.log('Checking for High Card');
 						return 'High Card';
 					},
 				},
@@ -176,7 +158,6 @@ class Landing extends Component {
 	// on component mount generate cards then randomize
 	componentDidMount() {
 		let cards = this.generate_cards();
-
 		this.setState(
 			{
 				card_pool: cards,
@@ -190,15 +171,14 @@ class Landing extends Component {
 	render() {
 		// Draw between 5 and 40 cards
 		const draw_cards = () => {
-            this.shuffle_deck(this.state.deck);
+			this.shuffle_deck(this.state.deck);
 			let cards = [];
-            // let card_number = Math.floor(Math.random() * Math.floor(35) + 5);
-            let card_number=8;
+			let card_number = Math.floor(Math.random() * Math.floor(35) + 5);
 
 			for (let i = 0; i < card_number; i++) {
 				cards.push(this.state.deck[i]);
-			}
-
+            }
+            
 			sort_hand(cards);
 		};
 
@@ -214,6 +194,8 @@ class Landing extends Component {
 				four: 0,
 				flush: false,
 				straight: false,
+				straight_flush: false,
+				royal_flush: false,
 				cards: cards_unsorted,
 			};
 
@@ -254,15 +236,13 @@ class Landing extends Component {
 					hand.cards[i][0] === hand.cards[i + 2][0] &&
 					hand.cards[i][0] === hand.cards[i + 3][0]
 				) {
-                    hand.four++;
-                    break;
+					hand.four++;
 				} else if (
 					i + 2 < hand.cards.length &&
 					hand.cards[i][0] === hand.cards[i + 1][0] &&
 					hand.cards[i][0] === hand.cards[i + 2][0]
 				) {
-                    hand.three++;
-                    break;
+					hand.three++;
 				} else if (
 					i + 1 < hand.cards.length &&
 					hand.cards[i][0] === hand.cards[i + 1][0]
@@ -289,13 +269,11 @@ class Landing extends Component {
 							temp[j] + 3 === temp[j + 3] &&
 							temp[j] + 4 === temp[j + 4]
 						) {
-							console.log('A straight exists');
 							hand.straight = true;
 						}
 					}
 				}
 			};
-
 			checkStraight();
 
 			// Check for a flush of any type
@@ -303,7 +281,48 @@ class Landing extends Component {
 				hand.flush = true;
 			}
 
-            console.log(hand);
+            // If there is a possibility of a Straight Flush or Royal Flush
+			if (hand.flush && hand.straight) {
+				const check_straight_flush = suit => {
+					let temp = [];
+					for (let i = 0; i < hand.cards.length; i++) {
+						if (hand.cards[i][1] === suit) {
+							temp.push(hand.cards[i][0]);
+						}
+					}
+					for (let j = 0; j < temp.length; j++) {
+						if (j + 4 < temp.length) {
+							if (
+								temp[j] + 1 === temp[j + 1] &&
+								temp[j] + 2 === temp[j + 2] &&
+								temp[j] + 3 === temp[j + 3] &&
+								temp[j] + 4 === temp[j + 4]
+							) {
+								hand.straight_flush = true;
+
+								// Check Royal Flush
+								if (
+									temp[temp.length - 1] === 14 &&
+									temp[temp.length - 2] === 13 &&
+									temp[temp.length - 3] === 12 &&
+									temp[temp.length - 4] === 11 &&
+									temp[temp.length - 5] === 10
+								) {
+									// we got a royal flush
+									hand.royal_flush = true;
+									console.log('ROYAL FLUSH!!!!!!!!!!!!!!!!!');
+									console.log(hand);
+								}
+							}
+						}
+					}
+				};
+				if (hand.C > 4) check_straight_flush('C');
+				if (hand.D > 4) check_straight_flush('D');
+				if (hand.H > 4) check_straight_flush('H');
+				if (hand.S > 4) check_straight_flush('S');
+			}
+
 			// Pass the sorted hand to find_highest
 			find_highest(hand);
 
@@ -336,10 +355,15 @@ class Landing extends Component {
 		return (
 			<div className="landing">
 				<div className="header">
+					<div className="overview">
+						Generate a random number of cards (between 5 and 40) and
+						determine the highest scoring hand (Royal Flush,
+						Straight, Pair, etc.){' '}
+					</div>
+					<div className="result">Best hand: {this.state.result}</div>
 					<div className="button">
 						<button onClick={() => draw_cards()}>Draw Hand</button>
 					</div>
-					<div className="result">Best hand: {this.state.result}</div>
 				</div>
 				<div className="cards">{this.state.card_div}</div>
 			</div>
