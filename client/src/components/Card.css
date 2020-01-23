@@ -1,0 +1,19 @@
+.card {
+	height: 200px;
+	width: 120px;
+	display: inline-block;
+	border: 1px solid red;
+	border-radius: 5px;
+	background-color: white;
+	margin: 10px;
+	font-size: 25px;
+	font-weight: bold;
+	-webkit-box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.75);
+	box-shadow: 10px 10px 15px -3px rgba(0, 0, 0, 0.75);
+}
+
+.bottom_right {
+	float: right;
+	margin-top: 140px;
+}

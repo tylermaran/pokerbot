@@ -1,14 +1,16 @@
+// Importing Depenencies
 import React from 'react';
+import Landing from './pages/Landing';
+
+// Importing Styling
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        Pokerbot
-      </header>
-    </div>
-  );
+	return (
+		<div className="App">
+			<Landing />
+		</div>
+	);
 }
 
 export default App;
