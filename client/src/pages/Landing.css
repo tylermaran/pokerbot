@@ -18,14 +18,9 @@
 }
 
 .result {
-	width: 50%;
 	font-size: 30px;
 	font-weight: bold;
 	color: white;
-}
-
-.button {
-	width: 50%;
 }
 
 button {

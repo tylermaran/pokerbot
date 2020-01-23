@@ -18,6 +18,7 @@ class Landing extends Component {
 					name: 'Royal Flush',
 					function: function(hand) {
 						if (hand.royal_flush) {
+							return 'Royal Flush'
 						} else {
 							return false;
 						}
@@ -310,8 +311,6 @@ class Landing extends Component {
 								) {
 									// we got a royal flush
 									hand.royal_flush = true;
-									console.log('ROYAL FLUSH!!!!!!!!!!!!!!!!!');
-									console.log(hand);
 								}
 							}
 						}
